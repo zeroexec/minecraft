@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Rules Minecraft Fortress PvP</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --accent-light-blue: #00d2ff;
+            --accent-pink: #ee9ca7;
+            --accent-gradient: linear-gradient(135deg, #00d2ff 0%, #928dab 100%);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --glass-border: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at top right, rgba(0, 210, 255, 0.1), transparent),
+                radial-gradient(circle at bottom left, rgba(238, 156, 167, 0.05), transparent);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Hero Banner - Optimized to show full image */
+        .hero-banner {
+            width: 100%;
+            /* Menggunakan aspect ratio agar tinggi menyesuaikan lebar gambar asli (736x920) */
+            /* Kita gunakan min-height agar tidak terlalu kecil di layar sempit */
+            min-height: 350px;
+            aspect-ratio: 16 / 9; 
+            background: url('https://i.pinimg.com/1200x/ba/4c/37/ba4c37adf6494531032cf14f80d7b3a9.jpg') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Overlay gradient agar teks lebih terbaca dan transisi ke body mulus */
+        .hero-banner::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.2), var(--bg-color));
+        }
+
+        .hero-overlay-text {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: 20px;
+        }
+
+        .hero-overlay-text h1 {
+            font-size: clamp(2rem, 10vw, 4.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+        }
+
+        .container {
+            max-width: 900px;
+            margin: -60px auto 0;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Info Section */
+        .info {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .info h2 {
+            margin-top: 0;
+            color: var(--accent-light-blue);
+        }
+
+        /* Concept Box */
+        .concept-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .concept-box h2 {
+            color: var(--accent-light-blue);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .concept-box h2::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-light-blue), transparent);
+        }
+
+        .concept-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .concept-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            transition: 0.3s ease;
+        }
+
+        .concept-item:hover {
+            border-color: var(--accent-light-blue);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .concept-item strong {
+            display: block;
+            color: var(--accent-pink);
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+        }
+
+        /* Rules Sections */
+        section {
+            background: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-light-blue);
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            padding-left: 28px;
+            position: relative;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-pink);
+            font-size: 1.1rem;
+        }
+
+        /* Ranks Grid */
+        .rank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .rank-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .rank-item:hover {
+            background: var(--accent-gradient);
+            color: #fff;
+        }
+
+        .rank-name {
+            display: block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .rank-points {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .footer-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 40px 0;
+            align-items: center;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 16px;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 1px;
+        }
+
+        .btn-group {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-admin {
+            border: 2px solid var(--accent-light-blue);
+            color: var(--accent-light-blue);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 210, 255, 0.4);
+        }
+
+        /* Desktop Optimizations */
+        @media (min-width: 768px) {
+            .hero-banner {
+                aspect-ratio: 21 / 9; /* Lebih lebar untuk tampilan desktop agar tidak terlalu tinggi */
+                max-height: 550px;
+            }
+            .concept-list {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-cta {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .btn {
+                width: auto;
+                padding: 16px 40px;
+            }
+            .rank-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero-banner">
+    <div class="hero-overlay-text">
+        <h1>Fortress PvP</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="info">
+        <h2>Kuy Mabar!</h2>
+        <p>Selamat datang di arena Minecraft Fortress PvP. Uji kreativitasmu dalam membangun jebakan dan ketangkasanmu dalam menyerang lawan. Pastikan kamu memahami seluruh peraturan di bawah ini sebelum memulai perjuanganmu menuju kasta tertinggi.</p>
+    </div>
+
+    <div class="concept-box">
+        <h2>KONSEP PERMAINAN</h2>
+        <p>Minecraft Fortress PvP adalah kompetisi berbasis pertahanan dan penyerangan yang menitikberatkan pada strategi individu.</p>
+        
+        <div class="concept-list">
+            <div class="concept-item">
+                <strong>Pertahanan Kreatif</strong>
+                Kebebasan penuh merancang arsitektur benteng dan jebakan. Kreativitas adalah kunci utama.
+            </div>
+            <div class="concept-item">
+                <strong>Penyerangan Taktis</strong>
+                Mode Adventure: murni mengandalkan ketangkasan tanpa merusak struktur benteng lawan.
+            </div>
+            <div class="concept-item">
+                <strong>Keadilan Bertarung</strong>
+                Menjunjung tinggi sportivitas 1 vs 1. Dilarang keras melakukan pengeroyokan tanpa izin.
+            </div>
+            <div class="concept-item">
+                <strong>Sistem Poin Dinamis</strong>
+                Indikator reputasi. Poin bertambah jika berhasil menyusup, dan berkurang jika gagal menjaga benteng.
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <h2>I. Ketentuan Umum</h2>
+        <ul>
+            <li>Kompetisi bersifat individu; dilarang membentuk aliansi atau bekerja sama dalam menyerang.</li>
+            <li>Setiap serangan harus dilakukan secara individu (1 vs 1).</li>
+            <li>Pengeroyokan hanya diperbolehkan jika target memberikan izin secara terbuka.</li>
+            <li>Pelanggaran aliansi akan dikenakan sanksi pengurangan poin atau tindakan admin.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>II. Fase Pembangunan (Creative)</h2>
+        <ul>
+            <li>Maksimal <strong>15 mob</strong> penjaga per benteng.</li>
+            <li>Larangan mob: <strong>Warden, Ender Dragon, dan Wither</strong>.</li>
+            <li>Larangan blok: Dilarang menggunakan <strong>jaring laba-laba (Cobweb)</strong>.</li>
+            <li>Wajib menyediakan jalur masuk yang jelas (Anti-Wall-Lock).</li>
+            <li>Benteng akan dicek oleh admin sebelum peperangan dimulai.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>III. Fase Peperangan (Adventure)</h2>
+        <ul>
+            <li><strong>Anti-Griefing:</strong> Dilarang menghancurkan/meletakkan blok, serta menggunakan ember lava/air.</li>
+            <li><strong>Aturan Lockdown:</strong> Desain benteng tidak boleh diubah selama 24 jam setelah mode Adventure aktif.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>IV. Sistem Poin dan Penalti</h2>
+        <ul>
+            <li><strong>Mekanisme:</strong> Berada di area poin 5 detik = +1 Poin (Penyerang) & -1 Poin (Pemilik).</li>
+            <li>Poin hanya aktif jika pemilik benteng sedang online di dalam game.</li>
+            <li><strong>Intruder Alert:</strong> Waktu 60 detik untuk kembali jika benteng diserang saat kamu di luar.</li>
+            <li>Gagal kembali tepat waktu = Mati otomatis, <strong>-12 Poin</strong> bagi pemilik, <strong>+12 Poin</strong> bagi penyerang.</li>
+            <li><strong>Debt Death:</strong> Jika poin mencapai -1 atau lebih, pemain mati otomatis setiap 5 menit hingga normal.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>V. Hierarki Peringkat</h2>
+        <div class="rank-grid">
+            <div class="rank-item"><span class="rank-name">Warrior</span><span class="rank-points">0-20</span></div>
+            <div class="rank-item"><span class="rank-name">Elite</span><span class="rank-points">21-50</span></div>
+            <div class="rank-item"><span class="rank-name">Master</span><span class="rank-points">51-100</span></div>
+            <div class="rank-item"><span class="rank-name">GM</span><span class="rank-points">101-200</span></div>
+            <div class="rank-item"><span class="rank-name">Epic</span><span class="rank-points">201-350</span></div>
+            <div class="rank-item"><span class="rank-name">Legend</span><span class="rank-points">351-550</span></div>
+            <div class="rank-item"><span class="rank-name">Mythic</span><span class="rank-points">551-800</span></div>
+            <div class="rank-item"><span class="rank-name">Honor</span><span class="rank-points">801-1100</span></div>
+            <div class="rank-item"><span class="rank-name">Glory</span><span class="rank-points">1101-1500</span></div>
+            <div class="rank-item"><span class="rank-name">Immortal</span><span class="rank-points">1501+</span></div>
+        </div>
+    </section>
+
+    <div class="footer-cta">
+        <a href="#" class="btn btn-group">GABUNG CHAT GRUP</a>
+        <a href="#" class="btn btn-admin">HUBUNGI ADMIN</a>
+    </div>
+</div>
+
+</body>
+</html>
